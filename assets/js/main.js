@@ -10,6 +10,25 @@
   /* ---------- Footer year ---------- */
   $$('[data-year]').forEach((el) => { el.textContent = new Date().getFullYear(); });
 
+  /* ---------- Dark / light theme ---------- */
+  // The <head> applies a saved "light" choice before first paint; this keeps the switch and the browser chrome in step.
+  const root = document.documentElement;
+  const themeToggle = $('#themeToggle');
+  const themeMeta = $('meta[name="theme-color"]');
+  const applyTheme = (theme) => {
+    root.setAttribute('data-theme', theme);
+    if (themeMeta) themeMeta.setAttribute('content', theme === 'light' ? '#f6f4ef' : '#07080c');
+    if (themeToggle) themeToggle.setAttribute('aria-label', theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode');
+  };
+  applyTheme(root.getAttribute('data-theme') === 'light' ? 'light' : 'dark');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      applyTheme(next);
+      try { localStorage.setItem('tdp-theme', next); } catch (e) { /* storage blocked: the choice lasts for this page only */ }
+    });
+  }
+
   /* ---------- Sticky header + back to top ---------- */
   const header = $('#header');
   const backTop = $('#backTop');
@@ -40,7 +59,7 @@
     backdrop.addEventListener('click', () => setOpen(false));
     $$('a', nav).forEach((a) => a.addEventListener('click', () => setOpen(false)));
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
-    window.addEventListener('resize', () => { if (window.innerWidth > 960) setOpen(false); });
+    window.addEventListener('resize', () => { if (window.innerWidth > 1000) setOpen(false); });
   }
 
   /* ---------- Reveal on scroll, counters, bars ---------- */
