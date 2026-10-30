@@ -15,6 +15,10 @@ Static marketing site for The Dispatch Partners Ltd (UK e-commerce fulfilment, R
 
 Shared styles are in `assets/css/styles.css`; all behaviour is in `assets/js/main.js`. The header and footer are repeated in each page, so a change there needs making in every HTML file.
 
+The site is dark by default with a light theme behind the sun/moon button in the header; the choice is saved in the visitor's browser (`localStorage` key `tdp-theme`), and a one-line script in each `<head>` applies it before the page paints. Colours are CSS variables at the top of `styles.css`.
+
+Photos in `assets/img/photos/` are free stock images from Unsplash (Unsplash licence, no attribution required). Swap them for photos of the real warehouse when available; keep the same file names or update the `src` in `index.html`.
+
 ## Run locally
 
 ```bash
